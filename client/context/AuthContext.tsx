@@ -15,19 +15,25 @@ interface AuthContextValue extends AuthState {
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [state, setState] = useState<AuthState>({ isAuthenticated: false, role: null });
+  const [state, setState] = useState<AuthState>({
+    isAuthenticated: false,
+    role: null,
+  });
 
-  const value = useMemo<AuthContextValue>(() => ({
-    ...state,
-    login: (email, _password, role) => {
-      setState({ isAuthenticated: true, role, userEmail: email });
-      sessionStorage.setItem("auth", JSON.stringify({ email, role }));
-    },
-    logout: () => {
-      setState({ isAuthenticated: false, role: null });
-      sessionStorage.removeItem("auth");
-    },
-  }), [state]);
+  const value = useMemo<AuthContextValue>(
+    () => ({
+      ...state,
+      login: (email, _password, role) => {
+        setState({ isAuthenticated: true, role, userEmail: email });
+        sessionStorage.setItem("auth", JSON.stringify({ email, role }));
+      },
+      logout: () => {
+        setState({ isAuthenticated: false, role: null });
+        sessionStorage.removeItem("auth");
+      },
+    }),
+    [state],
+  );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

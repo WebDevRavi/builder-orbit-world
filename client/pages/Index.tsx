@@ -4,12 +4,22 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import { useI18n } from "@/context/I18nContext";
 
-const schema = z.object({ email: z.string().email(), password: z.string().min(6), role: z.enum(["ADMIN","DEPT_HEAD","STAFF"]) });
+const schema = z.object({
+  email: z.string().email(),
+  password: z.string().min(6),
+  role: z.enum(["ADMIN", "DEPT_HEAD", "STAFF"]),
+});
 
 export default function Index() {
   const [email, setEmail] = useState("");
@@ -35,9 +45,17 @@ export default function Index() {
       <SmartCityBackground />
       <div className="relative z-10 max-w-7xl mx-auto px-4 py-20 grid gap-10 md:grid-cols-2 items-center">
         <div>
-          <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs backdrop-blur">Government Tech</div>
-          <h1 className="mt-4 text-3xl sm:text-5xl font-extrabold leading-tight">{t("appTitle")}</h1>
-          <p className="mt-4 text-white/80 max-w-xl">Administrative portal for government staff to manage and resolve civic complaints submitted by citizens. Dashboard-driven, map-enabled, and analytics-ready.</p>
+          <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs backdrop-blur">
+            Government Tech
+          </div>
+          <h1 className="mt-4 text-3xl sm:text-5xl font-extrabold leading-tight">
+            {t("appTitle")}
+          </h1>
+          <p className="mt-4 text-white/80 max-w-xl">
+            Administrative portal for government staff to manage and resolve
+            civic complaints submitted by citizens. Dashboard-driven,
+            map-enabled, and analytics-ready.
+          </p>
           <div className="mt-6 flex flex-wrap gap-3">
             <BadgePill>Secure login</BadgePill>
             <BadgePill>Role-based access</BadgePill>
@@ -52,16 +70,29 @@ export default function Index() {
           <CardContent className="grid gap-4">
             <div className="grid gap-2">
               <Label htmlFor="email">{t("email")}</Label>
-              <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@jh.gov.in" />
+              <Input
+                id="email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@jh.gov.in"
+              />
             </div>
             <div className="grid gap-2">
               <Label htmlFor="password">{t("password")}</Label>
-              <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+              <Input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
             </div>
             <div className="grid gap-2">
               <Label>{t("role")}</Label>
               <Select value={role} onValueChange={setRole}>
-                <SelectTrigger><SelectValue placeholder="Select role" /></SelectTrigger>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select role" />
+                </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="ADMIN">Admin</SelectItem>
                   <SelectItem value="DEPT_HEAD">Department Head</SelectItem>
@@ -70,7 +101,9 @@ export default function Index() {
               </Select>
             </div>
             {error && <div className="text-sm text-red-600">{error}</div>}
-            <Button onClick={onSubmit} className="w-full">{t("login")}</Button>
+            <Button onClick={onSubmit} className="w-full">
+              {t("login")}
+            </Button>
           </CardContent>
         </Card>
       </div>
@@ -80,9 +113,15 @@ export default function Index() {
             Government of Jharkhand — Department of Higher & Technical Education
           </div>
           <div className="flex gap-4">
-            <a href="#" className="hover:text-white">About</a>
-            <a href="#" className="hover:text-white">Terms</a>
-            <a href="#" className="hover:text-white">Privacy</a>
+            <a href="#" className="hover:text-white">
+              About
+            </a>
+            <a href="#" className="hover:text-white">
+              Terms
+            </a>
+            <a href="#" className="hover:text-white">
+              Privacy
+            </a>
           </div>
         </div>
       </div>
@@ -91,19 +130,35 @@ export default function Index() {
 }
 
 function BadgePill({ children }: { children: React.ReactNode }) {
-  return <div className="text-xs rounded-full border border-white/20 px-3 py-1 text-white/80">{children}</div>;
+  return (
+    <div className="text-xs rounded-full border border-white/20 px-3 py-1 text-white/80">
+      {children}
+    </div>
+  );
 }
 
 function SmartCityBackground() {
   return (
-    <svg aria-hidden className="absolute inset-0 h-full w-full opacity-30" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
+    <svg
+      aria-hidden
+      className="absolute inset-0 h-full w-full opacity-30"
+      viewBox="0 0 1440 900"
+      preserveAspectRatio="xMidYMid slice"
+    >
       <defs>
         <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0%" stopColor="#1e3a8a" />
           <stop offset="100%" stopColor="#0ea5e9" />
         </linearGradient>
       </defs>
-      <rect x="0" y="0" width="1440" height="900" fill="url(#g1)" opacity="0.08"/>
+      <rect
+        x="0"
+        y="0"
+        width="1440"
+        height="900"
+        fill="url(#g1)"
+        opacity="0.08"
+      />
       <g fill="none" stroke="#6ee7b7" strokeOpacity="0.2">
         <path d="M0 700 L80 640 L160 660 L240 590 L320 620 L400 540 L480 600 L560 520 L640 560 L720 500 L800 540 L880 480 L960 520 L1040 470 L1120 520 L1200 480 L1280 520 L1360 500 L1440 520" />
         <path d="M0 760 L80 700 L160 730 L240 660 L320 690 L400 610 L480 670 L560 590 L640 630 L720 570 L800 610 L880 550 L960 590 L1040 540 L1120 590 L1200 550 L1280 590 L1360 570 L1440 590" />

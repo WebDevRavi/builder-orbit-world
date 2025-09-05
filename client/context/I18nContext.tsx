@@ -47,12 +47,20 @@ interface I18nContextValue {
 const I18nContext = createContext<I18nContextValue | undefined>(undefined);
 
 export function I18nProvider({ children }: { children: React.ReactNode }) {
-  const [lang, setLang] = useState<LanguageCode>((localStorage.getItem("lang") as LanguageCode) || "en");
-  const value = useMemo<I18nContextValue>(() => ({
-    lang,
-    setLang: (l) => { localStorage.setItem("lang", l); setLang(l); },
-    t: (key) => messages[lang][key] || key,
-  }), [lang]);
+  const [lang, setLang] = useState<LanguageCode>(
+    (localStorage.getItem("lang") as LanguageCode) || "en",
+  );
+  const value = useMemo<I18nContextValue>(
+    () => ({
+      lang,
+      setLang: (l) => {
+        localStorage.setItem("lang", l);
+        setLang(l);
+      },
+      t: (key) => messages[lang][key] || key,
+    }),
+    [lang],
+  );
   return <I18nContext.Provider value={value}>{children}</I18nContext.Provider>;
 }
 

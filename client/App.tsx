@@ -34,11 +34,46 @@ const App = () => (
           <AuthProvider>
             <Routes>
               <Route path="/" element={<Index />} />
-              <Route path="/dashboard" element={<Protected><Dashboard /></Protected>} />
-              <Route path="/map" element={<Protected><MapPage /></Protected>} />
-              <Route path="/issues" element={<Protected><IssuesPage /></Protected>} />
-              <Route path="/departments" element={<Protected><DepartmentsPage /></Protected>} />
-              <Route path="/analytics" element={<Protected><AnalyticsPage /></Protected>} />
+              <Route
+                path="/dashboard"
+                element={
+                  <Protected>
+                    <Dashboard />
+                  </Protected>
+                }
+              />
+              <Route
+                path="/map"
+                element={
+                  <Protected>
+                    <MapPage />
+                  </Protected>
+                }
+              />
+              <Route
+                path="/issues"
+                element={
+                  <Protected>
+                    <IssuesPage />
+                  </Protected>
+                }
+              />
+              <Route
+                path="/departments"
+                element={
+                  <Protected>
+                    <DepartmentsPage />
+                  </Protected>
+                }
+              />
+              <Route
+                path="/analytics"
+                element={
+                  <Protected>
+                    <AnalyticsPage />
+                  </Protected>
+                }
+              />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </AuthProvider>

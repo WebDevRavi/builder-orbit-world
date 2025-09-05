@@ -9,7 +9,12 @@ export default function MapPage() {
   const instance = useRef<any>(null);
 
   useEffect(() => {
-    if (!mapRef.current || instance.current || typeof (window as any).L === "undefined") return;
+    if (
+      !mapRef.current ||
+      instance.current ||
+      typeof (window as any).L === "undefined"
+    )
+      return;
     const map = L.map(mapRef.current).setView([23.3441, 85.3096], 11);
     instance.current = map;
 
@@ -19,8 +24,20 @@ export default function MapPage() {
     }).addTo(map);
 
     issues.forEach((i) => {
-      const color = i.status === "CRITICAL" ? "#ef4444" : i.status === "PENDING" ? "#f59e0b" : i.status === "RESOLVED" ? "#22c55e" : "#2563eb";
-      const marker = L.circleMarker([i.location.lat, i.location.lng], { radius: 8, color, fillColor: color, fillOpacity: 0.8 });
+      const color =
+        i.status === "CRITICAL"
+          ? "#ef4444"
+          : i.status === "PENDING"
+            ? "#f59e0b"
+            : i.status === "RESOLVED"
+              ? "#22c55e"
+              : "#2563eb";
+      const marker = L.circleMarker([i.location.lat, i.location.lng], {
+        radius: 8,
+        color,
+        fillColor: color,
+        fillOpacity: 0.8,
+      });
       marker.addTo(map);
       const html = `<div style='min-width:220px'>
         <div style='display:flex; gap:8px; align-items:center;'>
@@ -36,7 +53,9 @@ export default function MapPage() {
       marker.bindPopup(html);
     });
 
-    return () => { map.remove(); };
+    return () => {
+      map.remove();
+    };
   }, []);
 
   return (

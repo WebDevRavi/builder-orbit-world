@@ -2,7 +2,17 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { issues, notifications } from "@/lib/data";
 import { useNavigate } from "react-router-dom";
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+} from "recharts";
 import { Bell, FolderOpen, BarChart3, Building2 } from "lucide-react";
 import AppLayout from "@/components/layout/AppLayout";
 
@@ -14,15 +24,29 @@ export default function Dashboard() {
   const inProgress = issues.filter((i) => i.status === "IN_PROGRESS").length;
   const resolved = issues.filter((i) => i.status === "RESOLVED").length;
 
-  const byCategory = Object.values(issues.reduce<Record<string, number>>((acc, i) => {
-    acc[i.category] = (acc[i.category] || 0) + 1; return acc; }, {})).map((v, idx) => v);
-  const pieData = Object.entries(issues.reduce<Record<string, number>>((acc, i) => { acc[i.category] = (acc[i.category]||0)+1; return acc;}, {})).map(([name, value]) => ({ name, value }));
+  const byCategory = Object.values(
+    issues.reduce<Record<string, number>>((acc, i) => {
+      acc[i.category] = (acc[i.category] || 0) + 1;
+      return acc;
+    }, {}),
+  ).map((v, idx) => v);
+  const pieData = Object.entries(
+    issues.reduce<Record<string, number>>((acc, i) => {
+      acc[i.category] = (acc[i.category] || 0) + 1;
+      return acc;
+    }, {}),
+  ).map(([name, value]) => ({ name, value }));
   const barData = [
     { name: "Pending", value: pending },
     { name: "In Progress", value: inProgress },
     { name: "Resolved", value: resolved },
   ];
-  const pieColors = ["hsl(var(--primary))", "hsl(var(--status-warning))", "hsl(var(--status-success))", "hsl(var(--status-critical))"]; // rotate as needed
+  const pieColors = [
+    "hsl(var(--primary))",
+    "hsl(var(--status-warning))",
+    "hsl(var(--status-success))",
+    "hsl(var(--status-critical))",
+  ]; // rotate as needed
 
   return (
     <AppLayout>
@@ -30,8 +54,16 @@ export default function Dashboard() {
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <StatCard title="Total Issues" value={total.toString()} />
           <StatCard title="Pending" value={pending.toString()} tone="warning" />
-          <StatCard title="In Progress" value={inProgress.toString()} tone="info" />
-          <StatCard title="Resolved" value={resolved.toString()} tone="success" />
+          <StatCard
+            title="In Progress"
+            value={inProgress.toString()}
+            tone="info"
+          />
+          <StatCard
+            title="Resolved"
+            value={resolved.toString()}
+            tone="success"
+          />
         </div>
 
         <div className="grid gap-4 lg:grid-cols-3">
@@ -45,7 +77,11 @@ export default function Dashboard() {
                   <XAxis dataKey="name" />
                   <YAxis allowDecimals={false} />
                   <Tooltip />
-                  <Bar dataKey="value" fill="hsl(var(--primary))" radius={[6, 6, 0, 0]} />
+                  <Bar
+                    dataKey="value"
+                    fill="hsl(var(--primary))"
+                    radius={[6, 6, 0, 0]}
+                  />
                 </BarChart>
               </ResponsiveContainer>
             </CardContent>
@@ -57,9 +93,18 @@ export default function Dashboard() {
             <CardContent className="h-64">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
-                  <Pie data={pieData} dataKey="value" nameKey="name" outerRadius={90} innerRadius={40}>
+                  <Pie
+                    data={pieData}
+                    dataKey="value"
+                    nameKey="name"
+                    outerRadius={90}
+                    innerRadius={40}
+                  >
                     {pieData.map((_, idx) => (
-                      <Cell key={idx} fill={pieColors[idx % pieColors.length]} />
+                      <Cell
+                        key={idx}
+                        fill={pieColors[idx % pieColors.length]}
+                      />
                     ))}
                   </Pie>
                   <Tooltip />
@@ -81,7 +126,9 @@ export default function Dashboard() {
                     <Bell className="mt-0.5 size-4 text-muted-foreground" />
                     <div>
                       <div className="font-medium">{n.title}</div>
-                      <div className="text-sm text-muted-foreground">{n.message}</div>
+                      <div className="text-sm text-muted-foreground">
+                        {n.message}
+                      </div>
                     </div>
                   </li>
                 ))}
@@ -93,13 +140,25 @@ export default function Dashboard() {
               <CardTitle>Quick Actions</CardTitle>
             </CardHeader>
             <CardContent className="grid gap-3">
-              <Button className="justify-start" variant="outline" onClick={() => navigate("/issues") }>
+              <Button
+                className="justify-start"
+                variant="outline"
+                onClick={() => navigate("/issues")}
+              >
                 <FolderOpen className="mr-2 size-4" /> View Issues
               </Button>
-              <Button className="justify-start" variant="outline" onClick={() => navigate("/analytics") }>
+              <Button
+                className="justify-start"
+                variant="outline"
+                onClick={() => navigate("/analytics")}
+              >
                 <BarChart3 className="mr-2 size-4" /> Analytics
               </Button>
-              <Button className="justify-start" variant="outline" onClick={() => navigate("/departments") }>
+              <Button
+                className="justify-start"
+                variant="outline"
+                onClick={() => navigate("/departments")}
+              >
                 <Building2 className="mr-2 size-4" /> Departments
               </Button>
             </CardContent>
@@ -110,8 +169,23 @@ export default function Dashboard() {
   );
 }
 
-function StatCard({ title, value, tone }: { title: string; value: string; tone?: "success"|"warning"|"info" }) {
-  const color = tone === "success" ? "text-status-success" : tone === "warning" ? "text-status-warning" : tone === "info" ? "text-primary" : "text-foreground";
+function StatCard({
+  title,
+  value,
+  tone,
+}: {
+  title: string;
+  value: string;
+  tone?: "success" | "warning" | "info";
+}) {
+  const color =
+    tone === "success"
+      ? "text-status-success"
+      : tone === "warning"
+        ? "text-status-warning"
+        : tone === "info"
+          ? "text-primary"
+          : "text-foreground";
   return (
     <Card>
       <CardHeader className="pb-2">
