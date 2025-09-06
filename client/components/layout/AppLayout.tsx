@@ -143,7 +143,9 @@ export default function AppLayout({ children }: { children: ReactNode }) {
                 Government of Jharkhand — Department of Higher & Technical
                 Education
               </div>
-              <div><p>Contact: Ravisolanki@gmail.com | +91 0000000000</p></div>
+              <div>
+                <p>Contact: Ravisolanki@gmail.com | +91 0000000000</p>
+              </div>
             </div>
             <div className="flex gap-4">
               <a href="#" className="hover:text-foreground">
